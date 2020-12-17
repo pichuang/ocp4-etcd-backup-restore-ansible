@@ -1,8 +1,8 @@
-# Backup and restore ETCD Cluster Data using Ansible (OpenShift 4.2)
+# Backup and restore ETCD Cluster Data using Ansible (OpenShift 4.6)
 
 ETCD is the key-value store for OpenShift Container Platform, which persists the state of all resource objects.
 
-This repository implements a set of Ansible Playbooks in order to perform a backup and restore of the ETCD cluster data of an OpenShift Operational Cluster version 4.2. Please, carefully review the contents in the following subsections in order to understand and be able to execute backup and restore procedures.
+This repository implements a set of Ansible Playbooks in order to perform a backup and restore of the ETCD cluster data of an OpenShift Operational Cluster version 4.6. Please, carefully review the contents in the following subsections in order to understand and be able to execute backup and restore procedures.
 
 ## ETCD cluster data Backup
 
@@ -14,11 +14,11 @@ On the other hand, You should only save a snapshot from a single master host. Yo
 
 -   Firstly, It is necessary to have an operational ETCD cluster with a quorum required and sanity checks passed.
 -   SSH access to a master host.
--   Inventory file (**./inventory**) filled with OCP4.2 cluster settings
+-   Inventory file (**./inventory**) filled with OCP4.6 cluster settings
 
 ### Procedure Overview
 
-**Automatic Process (Ansible Playbook -> ocp42-backup-etcd.yml)**
+**Automatic Process (Ansible Playbook -> ocp4-backup-etcd.yml)**
 
 -   Access a master host as the root user.
 -   Run the etcd-snapshot-backup.sh script and pass in the location to save the etcd snapshot to.
@@ -38,42 +38,42 @@ It is important to bear in mind that this solution handles situations where you 
 
 ### Procedure Overview
 
-**\*Automatic Process (Ansible Playbook -> ocp42-restore-etcd.yml )**
+**\*Automatic Process (Ansible Playbook -> ocp4-restore-etcd.yml )**
 
 -   Prepare each master host in your cluster to be restored.
 -   Run the restore script on all of your master hosts.
 
 **Manual Process(\*)**
 
-Please follow **verify** subsection/s included in OpenShift 4.2 Official Documentation (https://docs.openshift.com/container-platform/4.2/backup_and_restore/disaster_recovery/scenario-2-restoring-cluster-state.html#dr-restoring-cluster-state)
+Please follow **verify** subsection/s included in OpenShift 4.6 Official Documentation (https://docs.openshift.com/container-platform/4.6/backup_and_restore/disaster_recovery/scenario-2-restoring-cluster-state.html#dr-restoring-cluster-state)
 
 ## Example Automation Process Execution
 
 ### Backup
 
--   Perform a backup locating "`<date>`-snapshot.db" file in "/tmp/openshift42_backups" folder
+-   Perform a backup locating "`<date>`-snapshot.db" file in "/tmp/openshift4_backups" folder
 
 ```
-$ ansible-playbook -i inventory ocp42-backup-etcd.yml --extra-vars="backup_dst_path=/tmp/openshift42_backup"
+$ ansible-playbook -i inventory ocp4-backup-etcd.yml --extra-vars="backup_dst_path=/tmp/openshift4_backup"
 ```
 
 ### Restore
 
--   Perform a ETCD recovery from a backup file "/tmp/openshift42_backup/20200109092851-snapshot.db"
+-   Perform a ETCD recovery from a backup file "/tmp/openshift4_backup/20200109092851-snapshot.db"
 
 ```
-$ ansible-playbook -i inventory ocp42-restore-etcd.yml --extra-vars="backup_src_file=/tmp/openshift42_backup/20200109092851-snapshot.db"
+$ ansible-playbook -i inventory ocp4-restore-etcd.yml --extra-vars="backup_src_file=/tmp/openshift4_backup/20200109092851-snapshot.db"
 ```
 
 ## Official Sources
 
 ### Backup
 
--   https://docs.openshift.com/container-platform/4.2/backup_and_restore/backing-up-etcd.html
+-   https://docs.openshift.com/container-platform/4.6/backup_and_restore/backing-up-etcd.html
 
 ### Restore
 
--   https://docs.openshift.com/container-platform/4.2/backup_and_restore/disaster_recovery/scenario-2-restoring-cluster-state.html#dr-restoring-cluster-state
+-   https://docs.openshift.com/container-platform/4.6/backup_and_restore/disaster_recovery/scenario-2-restoring-cluster-state.html#dr-restoring-cluster-state
 
 ## License
 
