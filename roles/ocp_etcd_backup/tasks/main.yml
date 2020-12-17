@@ -29,7 +29,7 @@
     verbosity: 1
 
 - name: Perform ETCD backup
-  shell: "/usr/local/bin/etcd-snapshot-backup.sh {{ backup_src_file }}"
+  shell: "/usr/local/bin/cluster-backup.sh {{ backup_src_file }}"
   become: true
 
 - name: Fetch ETCD backup file
